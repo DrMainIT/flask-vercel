@@ -1,13 +1,22 @@
 import flask  
 from flask import request,render_template,jsonify,redirect
 import sqlite3
+import shutil
+import os
 
 app = flask.Flask(__name__)
 
 #database connection local connection
+# Copy the database to a writable location
+db_path = './mydatabase.db'  # Path in the deployed source
+temp_db_path = '/tmp/mydatabase.db'
+
+if not os.path.exists(temp_db_path):
+    print("Copying database")
+    shutil.copy(db_path, temp_db_path)
 
 def get_db_connection():
-    conn = sqlite3.connect('mydatabase.db')
+    conn = sqlite3.connect(temp_db_path)
     print("Opened database successfully")
     return conn
 
