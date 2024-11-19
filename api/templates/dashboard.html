@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow-y: auto; /* Abilita lo scroll */
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-height: 90vh; /* Limita l'altezza del contenitore per evitare che fuoriesca */
+            overflow-y: auto; /* Abilita lo scroll nel contenitore */
+            padding: 20px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            transition: color 0.3s;
+        }
+        h2:hover {
+            color: #4CAF50;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #333;
+        }
+        code {
+            display: block;
+            background: #f8f8f8;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+            color: #2c3e50;
+        }
+        /* Animazioni */
+        .container:hover {
+            transform: scale(1.02);
+        }
+         /* Stile migliorato per il form */
+         .form-example {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .input-example[type="text"] {
+            width: 80%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .input-example[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .input-example[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            width: 80%;
+        }
+
+        .input-example[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Aggiungi un'immagine */
+        .example-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            margin-top: 20px;   
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard</h1>
+        <h2>Come funziona un sito web</h2>
+        <p>Un sito web è diviso in tre parti principali:</p>
+        <ul>
+            <li><b>Frontend:</b> Gli elementi visivi (pulsanti, testo, grafiche) con cui gli utenti interagiscono.</li>
+            <li><b>Backend:</b> La logica che elabora i dati dal frontend e fornisce risposte.</li>
+            <li><b>Database:</b> Una raccolta di dati organizzati per memorizzare e recuperare informazioni.</li>
+        </ul>
+
+        <h2>Frontend</h2>
+        <p>Il frontend include tutti i componenti visivi che gli utenti vedono e con cui interagiscono, come ad esempio:</p>
+        <ul>
+            <li>Pulsanti <br><br><button onclick="alert('bravo')">Cliccami</button><br><br></li>
+            <li>
+                Form:
+                <br><br>
+                <form action="#" class="form-example">
+                    <input type="text" class="input-example" placeholder="Inserisci">
+                    <input type="submit" class="input-example">
+                </form>
+                <br><br>
+            </li>
+            <li>
+                Testo e immagini
+                <br><br>
+                <img class="example-image" src="{{ url_for('static', filename='img/meme.jpeg') }}" alt="">
+            </li>
+        </ul>
+
+        <h2>Backend</h2>
+        <p>Il backend gestisce la logica del sito. Elabora i dati dal frontend ed esegue azioni come:</p>
+        <ul>
+            <li>login di un sito</li>
+            <li>Interagire con il database per recuperare o salvare informazioni</li>
+            <li>elaborare i dati</li>
+        </ul>
+        <p>Alcuni framework comuni per il backend includono:</p>
+        <ul>
+            <li>Flask (usato in questo progetto)</li>
+            <li>Django</li>
+            <li>FastAPI</li>
+            <li>Express.js</li>
+            <li>Spring</li>
+        </ul>
+
+        <h2>Database</h2>
+        <p>Un database viene utilizzato per memorizzare e recuperare dati, come i dettagli dell'utente o l'inventario dei prodotti. In questo progetto, usiamo SQLite, che è leggero e facile da configurare.</p>
+
+        <h2>Collegare tutto</h2>
+        <p>Il backend collega il frontend e il database. Ad esempio:</p>
+        <div class="example">
+            Un utente compila un form per registrarsi. Il backend elabora i dati e li salva nel database.
+        </div>
+
+        <h2>Richieste HTTP</h2>
+        <p>La comunicazione tra il frontend e il backend avviene tramite richieste HTTP. Le più comuni sono:</p>
+        <ul>
+            <li><b>GET:</b> Recupera dati</li>
+            <li><b>POST:</b> Invia dati</li>
+            <li><b>PUT:</b> Aggiorna dati</li>
+            <li><b>DELETE:</b> Rimuove dati</li>
+        </ul>
+
+        <h2>Passare online</h2>
+        <p>Affinché un sito web sia accessibile online, necessita di un dominio (un nome univoco) e un indirizzo IP. Ad esempio, <code>https://google.com</code> è un dominio che punta ad un server di Google tramite un indirizzo IP. ovvero <code>172.217.20.206</code>se si prova a digitare l'ip sulla barra di ricerca comparirà il sito di google</p>
+
+        <h2>Configurazione</h2>
+        <p>Per creare questo progetto, abbiamo utilizzato i seguenti strumenti:</p>
+        <ul>
+            <li><b>Python:</b> Installa da <a href="https://python.org">python.org</a>.</li>
+            <li><b>Flask:</b> Installato tramite <code>pip install flask</code>.</li>
+            <li><b>SQLite:</b> Incluso in Python, non è necessaria un'installazione separata.</li>
+        </ul>
+
+        <h2>Struttura del sito</h2>
+<p>La struttura del sito è organizzata come segue:</p>
+<pre>
+<code style="font-size: small;">
+website/
+│
+├── app.py                # Contiene la logica del backend la gestione delle route e delle richieste.
+│
+├── templates/            # Contiene i file HTML per il frontend.
+│   ├── index.html        # Pagina di benvenuto o homepage.
+│   └── login.html        # Pagina de login.
+│   └── register.html     # Pagina di registrazione.
+│
+├── static/               # Contiene file statici come CSS, JavaScript e immagini.
+│   ├── css/              # Contiene i file CSS per la gestione dello stile del sito.
+│   └── img/              # Contiene le immagini utilizzate nel sito.
+│
+└── mydatabase.db         # Database SQLite per memorizzare i dati utente.
+</code>
+</pre>
+
+        <h2>2. Route e la loro funzionalità</h2>
+        
+        <h3>Route della homepage (/)</h3>
+        <p>La route della homepage renderizza il file <code>index.html</code>:</p>
+        <code>
+@app.get('/')<br>
+def index():<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;return render_template('index.html')
+        </code>
+        <p>Questo è il punto di ingresso dell'applicazione, che serve la pagina principale di atterraggio.</p>
+
+        <h3>route di registrazione (/register)</h3>
+        <p>Questa route ha due metodi: <code>GET</code> e <code>POST</code>.</p>
+        
+        <p><b>GET:</b> Renderizza il modulo di registrazione <code>register.html</code></p>
+        <code>
+@app.get('/register')<br>
+def register():<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;return render_template('register.html')
+        </code>
+        
+        <p><b>POST:</b> Gestisce l'invio del modulo, sanifica i dati dell'utente e li inserisce nel database.</p>
+        <code>
+@app.post('/register')<br>
+def register_post():<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;data = request.form<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;name = data['username']<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;email = data['email']<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;password = data['password']<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;conn = get_db_connection()<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;conn.execute('INSERT INTO users (name, email, password) VALUES (?,?,?)', (name, email, password))<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;conn.commit()<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;conn.close()<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;return render_template('login.html')
+        </code>
+        <p>Una volta completata la registrazione, l'utente viene reindirizzato alla pagina di login.</p>
+
+        <h3>route di login (/login)</h3>
+        <p>Questa route ha anch'essa due metodi: <code>GET</code> e <code>POST</code>.</p>
+        
+        <p><b>GET:</b> Renderizza il modulo di login <code>login.html</code></p>
+        <code>
+            @app.get('/login')<br>
+            def login():<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return render_template('login.html')
+        </code>
+        <p><b>POST:</b> Valida le credenziali dell'utente interrogando il database.</p>
+                <code>
+                @app.post('/login')<br>
+                def login_post():<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;data = request.form<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;email = data['email']<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;password = data['password']<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;conn = get_db_connection()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;cursor = conn.execute('SELECT * FROM users WHERE email = ? AND password = ?', (email, password))<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;users = cursor.fetchall()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;conn.close()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if len(users) > 0:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return render_template('dashboard.html')<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return render_template('login.html')
+                    </code>
+                    <p>Se le credenziali corrispondono a un utente esistente nel database, l'utente viene indirizzato alla pagina <code>dashboard.html</code>. Altrimenti, viene reindirizzato al modulo di login.</p>
+            
+                    <h3>Connessione al database</h3>
+                    <p>Una funzione di supporto <code>get_db_connection()</code> viene utilizzata per stabilire e restituire una connessione al database SQLite:</p>
+                    <code>
+            def get_db_connection():<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;conn = sqlite3.connect('mydatabase.db')<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;print("Database aperto con successo")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return conn
+                    </code>
+                    <p>Questa funzione garantisce che tutte le interazioni con il database siano centralizzate per coerenza e per un debug più facile.</p>
+            
+                    <h2>3. Stack tecnologico</h2>
+                    <ul>
+                        <li><b>Flask</b>: Framework web per il backend.</li>
+                        <li><b>SQLite</b>: Database leggero per memorizzare le informazioni degli utenti.</li>
+                        <li><b>HTML & CSS</b>: Tecnologie frontend per costruire interfacce utente.</li>
+                    </ul>
+            
+                    <p>Sentiti libero di esplorare e ampliare il sito con nuove funzionalità!</p>
+                </div>
+            </body>
+            </html>

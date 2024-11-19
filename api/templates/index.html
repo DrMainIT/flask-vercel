@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            animation: backgroundAnimation 15s infinite;
+        }
+
+        /* Gradiente animato per il titolo */
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b, #ff6a00, #d500f9);
+            background-clip: text;
+            color: transparent;
+            animation: gradientAnimation 3s ease infinite;
+        }
+
+        /* Animazione del gradiente */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Animazione della pagina di benvenuto */
+        .welcome-container {
+            transform: translateY(100px);
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animazioni del pulsante */
+        .welcome-button {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #ff6a00;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(255, 106, 0, 0.5);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .welcome-button:hover {
+            background-color: #ff7e5f;
+            box-shadow: 0 4px 25px rgba(255, 126, 95, 0.7);
+            transform: translateY(-5px);
+        }
+
+        .welcome-button:active {
+            transform: translateY(2px);
+        }
+
+        /* Aggiungi un po' di margine sopra per il titolo */
+        .container {
+            margin-top: -50px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="container">
+            <h1>Benvenuto nel nostro sito!</h1>
+            <p>Esplora, divertiti e scopri cose incredibili.</p>
+            <a href="/register">
+                <button class="welcome-button">Inizia Ora</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
