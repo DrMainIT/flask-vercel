@@ -63,6 +63,14 @@ def login_post():
     else:
         return render_template('login.html')
 
+@app.get('/online')
+def online():
+    return render_template('online.html')
+
+@app.get('/tutorial')
+def tutorial():
+    return render_template('tutorial.html')
+
 @app.post('/add')
 def createUser():
     data = request.form['username']
@@ -95,3 +103,5 @@ def showUsers():
     response += "</ul>"
     return response
 
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=3000, debug=True)

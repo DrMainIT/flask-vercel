@@ -116,74 +116,10 @@
             <h1><a href="/online" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Verso il web</a></h1>
         </div>
         </nav>
-        <h2>Come funziona un sito web</h2>
-        <p>Un sito web è diviso in tre parti principali:</p>
-        <ul>
-            <li><b>Frontend:</b> Gli elementi visivi (pulsanti, testo, grafiche) con cui gli utenti interagiscono.</li>
-            <li><b>Backend:</b> La logica che elabora i dati dal frontend e fornisce risposte.</li>
-            <li><b>Database:</b> Una raccolta di dati organizzati per memorizzare e recuperare informazioni.</li>
-        </ul>
-
-        <h2>Frontend</h2>
-        <p>Il frontend include tutti i componenti visivi che gli utenti vedono e con cui interagiscono, come ad esempio:</p>
-        <ul>
-            <li>Pulsanti <br><br><button onclick="alert('bravo/a')">Cliccami</button><br><br></li>
-            <li>
-                Form:
-                <br><br>
-                    <input type="text" class="input-example" placeholder="Inserisci">
-                    <input type="submit" class="input-example">
-                <br><br>
-            </li>
-            <li>
-                Testo e immagini
-                <br><br>
-                <img class="example-image" src="{{ url_for('static', filename='img/meme.jpeg') }}" alt="">
-            </li>
-        </ul>
-
-        <h2>Backend</h2>
-        <p>Il backend gestisce la logica del sito. Elabora i dati dal frontend ed esegue azioni come:</p>
-        <ul>
-            <li>login di un sito</li>
-            <li>Interagire con il database per recuperare o salvare informazioni</li>
-            <li>elaborare i dati</li>
-        </ul>
-        <p>Alcuni framework comuni per il backend includono:</p>
-        <ul>
-            <li>Flask (usato in questo progetto)</li>
-            <li>Django</li>
-            <li>FastAPI</li>
-            <li>Express.js</li>
-            <li>Spring</li>
-        </ul>
-
-        <h2>Database</h2>
-        <p>Un database viene utilizzato per memorizzare e recuperare dati, come i dettagli dell'utente o l'inventario dei prodotti. In questo progetto, usiamo SQLite, che è leggero e facile da configurare.</p>
-
-        <h2>Collegare tutto</h2>
-        <p>Il backend collega il frontend e il database. Ad esempio:</p>
-        <div class="example">
-            Un utente compila un form per registrarsi. Il backend elabora i dati e li salva nel database.
+        <h2>Passare online</h2>
+        <p>Affinché un sito web sia accessibile online, necessita di un dominio (un nome univoco) e un indirizzo IP. Ad esempio, <code>https://google.com</code> è un dominio che punta ad un server di Google tramite un indirizzo IP. ovvero <code>172.217.20.206</code>se si prova a digitare l'ip sulla barra di ricerca comparirà il sito di google</p>
+            
+                
         </div>
-
-        <h2>Richieste HTTP</h2>
-        <p>La comunicazione tra il frontend e il backend avviene tramite richieste HTTP. Le più comuni sono:</p>
-        <ul>
-            <li><b>GET:</b> Recupera dati</li>
-            <li><b>POST:</b> Invia dati</li>
-            <li><b>PUT:</b> Aggiorna dati</li>
-            <li><b>DELETE:</b> Rimuove dati</li>
-        </ul>
-        <h2>2. Route e la loro funzionalità</h2>
-        <p>Una route è fondamentalmente un percorso verso un file specifico
-            o un blocco di codice che restituisce qualcosa in questo caso quando si accede
-            alla route ‘/’ verrà visualizzato “hello world”</p>
-        <code>
-            @app.get('/')<br>
-            def index():<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;return 'Hello, World!'
-        </code>
-                </div>
-            </body>
-            </html>
+    </body>
+</html>
