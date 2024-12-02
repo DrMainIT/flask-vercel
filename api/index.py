@@ -8,7 +8,7 @@ app = flask.Flask(__name__)
 
 #database connection local connection
 # Copy the database to a writable location
-db_path = '../mydatabase.db'  # Path in the deployed source
+db_path = './mydatabase.db'  # Path in the deployed source
 temp_db_path = '/tmp/mydatabase.db'
 
 if not os.path.exists(temp_db_path):
