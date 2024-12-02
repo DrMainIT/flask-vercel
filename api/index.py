@@ -16,7 +16,7 @@ if not os.path.exists(temp_db_path):
     shutil.copy(db_path, temp_db_path)
 
 def get_db_connection():
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(temp_db_path)
     print("Opened database successfully")
     return conn
 
