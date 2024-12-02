@@ -11,7 +11,7 @@ app = flask.Flask(__name__)
 db_path = './mydatabase.db'  # Path in the deployed source
 temp_db_path = '/tmp/mydatabase.db'
 
-if not os.path.exists(temp_db_path):
+if os.path.exists(temp_db_path):
     print("Copying database")
     shutil.copy(db_path, temp_db_path)
 
@@ -74,6 +74,8 @@ def tutorial():
 @app.get('/showProducts')
 def showProducts():
     conn = get_db_connection()
+    # if table doesn't exist create it 
+    conn.execute('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, image TEXT, description TEXT, price INTEGER)')
     # create a table
     cursor = conn.execute('SELECT * FROM products')
     products = cursor.fetchall()
