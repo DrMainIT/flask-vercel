@@ -8,10 +8,10 @@ app = flask.Flask(__name__)
 
 #database connection local connection
 # Copy the database to a writable location
-db_path = './mydatabase.db'  # Path in the deployed source
+db_path = '../mydatabase.db'  # Path in the deployed source
 temp_db_path = '/tmp/mydatabase.db'
 
-if os.path.exists(temp_db_path):
+if not os.path.exists(temp_db_path):
     print("Copying database")
     shutil.copy(db_path, temp_db_path)
 
@@ -75,8 +75,23 @@ def tutorial():
 def showProducts():
     conn = get_db_connection()
     # if table doesn't exist create it 
-    conn.execute('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, image TEXT, description TEXT, price INTEGER)')
-    # create a table
+    if conn.execute('SELECT name FROM sqlite_master WHERE type="table" AND name="products"').fetchone() is None:
+        conn.execute('''
+            CREATE TABLE products (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                image TEXT,
+                description TEXT,
+                price INTEGER NOT NULL
+            )
+        ''')
+        products = [
+            ("Product 1", "agenda", "This is product 1", 100),
+            ("Product 2", "calzini", "This is product 2", 200),
+            ("Product 3", "cuscino", "This is product 3", 300)
+        ]
+        conn.executemany('INSERT INTO products (name, image, description, price) VALUES (?, ?, ?, ?)', products)
+        conn.commit()
     cursor = conn.execute('SELECT * FROM products')
     products = cursor.fetchall()
     conn.close()
