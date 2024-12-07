@@ -131,20 +131,23 @@
 <p>La struttura del sito è organizzata come segue:</p>
 <pre>
 <code style="font-size: small;">
-website/
-│
-├── app.py                # Contiene la logica del backend la gestione delle route e delle richieste.
-│
-├── templates/            # Contiene i file HTML per il frontend.
-│   ├── index.html        # Pagina di benvenuto o homepage.
-│   └── login.html        # Pagina de login.
-│   └── register.html     # Pagina di registrazione.
-│
-├── static/               # Contiene file statici come CSS, JavaScript e immagini.
-│   ├── css/              # Contiene i file CSS per la gestione dello stile del sito.
-│   └── img/              # Contiene le immagini utilizzate nel sito.
-│
-└── mydatabase.db         # Database SQLite per memorizzare i dati utente.
+    website/
+    │
+    ├── api/                    # Contiene i file Python per il backend.
+    │   ├── index.py            # File principale dell'applicazione Flask.
+    │
+    ├── templates/              # Contiene i file HTML per il frontend.
+    │   ├── index.html          # Pagina di benvenuto o homepage.
+    │   ├── login.html          # Pagina di login.
+    │   ├── register.html       # Pagina di registrazione.
+    │   └── tutorial.html       # Pagina del tutorial.
+    │   ...                     # Altri file HTML per il sito.       
+    │
+    ├── static/                 # Contiene file statici come CSS, JavaScript e immagini.
+    │   ├── css/                # Contiene i file CSS per la gestione dello stile del sito.
+    │   └── img/                # Contiene le immagini utilizzate nel sito.
+    │
+    └── mydatabase.db           # Database SQLite per memorizzare i dati utente.
 </code>
 </pre>
 
