@@ -79,7 +79,8 @@
 </head>
 <body>
     <h1>Benvenuto nello Shop</h1>
-    <h2>Per scoprire come è stato fatto il sito clicca </h2><a href="/dashboard">qui</a>
+    <h2>Per scoprire come è stato fatto il sito clicca </h2><a href="/dashboard?id_user={{id_user}}">qui</a>
+    <h1>Il tuo saldo ammonta a {{money}}€ </h1>
     <div class="container">
         {% for i in products %}
             <!-- Aggiungi un'immagine -->
@@ -90,6 +91,7 @@
                 <!-- to access the img i need url for and the name of the variable -->
                 <form action="/showProduct/{{i.id}}" method="get">
                     <button type="submit">Buy</button>
+                    <input type="hidden" name="id_user" id="id_user" value="{{id_user}}">
                 </form>
             </div>
         {% endfor %}

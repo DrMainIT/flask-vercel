@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -111,10 +111,10 @@
         <h1>Dashboard</h1>
         <nav>
         <div style="display: flex; justify-content: center; gap: 30px;">
-            <h1><a href="/dashboard" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Le basi</a></h1>
-            <h1><a href="/tutorial" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Tutorial</a></h1>
-            <h1><a href="/online" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Verso il web</a></h1>
-            <h1><a href="/showProducts" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Torna al sito</a></h1>
+            <h1><a href="/dashboard?id_user={{id_user}}" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Le basi</a></h1>
+            <h1><a href="/tutorial?id_user={{id_user}}" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Tutorial</a></h1>
+            <h1><a href="/online?id_user={{id_user}}" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Verso il web</a></h1>
+            <h1><a href="/showProducts/{{id_user}}" style="color: black; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Torna al sito</a></h1>
         </div>
         </nav>
         <h2>Cosa realizzeremo</h2>
@@ -211,7 +211,100 @@ def register_post():<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return render_template('login.html')
                     </code>
                     <p>Se le credenziali corrispondono a un utente esistente nel database, l'utente viene indirizzato alla pagina <code>dashboard.html</code>. Altrimenti, viene reindirizzato al modulo di login.</p>
-            
+                    <h3>route (/showProducts)</h3>
+                    <p>La route dinamica in Flask è una route che accetta parametri variabili nell'URL, consentendo di personalizzare il comportamento in base all'input <code>int:id_user</code> Indica che l'URL deve includere un numero intero che sarà catturato e passato come argomento alla funzione associata. </p>
+                    <pre><code>
+                        @app.get('/showProducts/&lt;int:id_user&gt;')
+                        def showProducts(id_user):
+                        &nbsp;&nbsp;&nbsp;&nbsp;conn = get_db_connection()
+                        &nbsp;&nbsp;&nbsp;&nbsp;# recupera tutti i prodotti
+                        &nbsp;&nbsp;&nbsp;&nbsp;cursor = conn.execute('SELECT * FROM products')
+                        &nbsp;&nbsp;&nbsp;&nbsp;products = cursor.fetchall()
+                        &nbsp;&nbsp;&nbsp;&nbsp;# recupera il denaro dell'utente
+                        &nbsp;&nbsp;&nbsp;&nbsp;cursor2 = conn.execute('SELECT money FROM users WHERE id = (?)', (id_user,))
+                        &nbsp;&nbsp;&nbsp;&nbsp;money = cursor2.fetchall()
+                        &nbsp;&nbsp;&nbsp;&nbsp;conn.close()
+                        &nbsp;&nbsp;&nbsp;&nbsp;# processa i dati
+                        &nbsp;&nbsp;&nbsp;&nbsp;processed_data = []
+                        &nbsp;&nbsp;&nbsp;&nbsp;for product in products:
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;processed_data.append({
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;id&quot;: product[0],
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: product[1],
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;link&quot;: &quot;img/&quot;+ product[2] + '.webp' if product[2] else &quot;img/default.jpg&quot;,
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;description&quot;: product[3]
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+                        &nbsp;&nbsp;&nbsp;&nbsp;# Create a simple HTML response
+                        &nbsp;&nbsp;&nbsp;&nbsp;return render_template('showProducts.html', products=processed_data, money=money[0][0], id_user=id_user)
+                        </code></pre>
+                        
+                        <h3>route (/showProduct)</h3>
+                        <p>
+                            La route <code>@app.get('/showProduct/&lt;int:id&gt;')</code> è progettata per visualizzare i dettagli di un singolo prodotto. 
+                            Quando un utente accede a questa route passando l'ID di un prodotto, il server esegue una query per recuperare i dettagli del prodotto dal database e mostra una pagina HTML con il nome, la descrizione, l'immagine e il prezzo del prodotto.
+                        </p>
+                        <p>Il flusso della route è il seguente:</p>
+                        <ul>
+                            <li>Il parametro &lt;int:id&gt; nell'URL rappresenta l'ID del prodotto da visualizzare.</li>
+                            <li>Viene effettuata una query per recuperare i dati del prodotto.</li>
+                            <li>I dati vengono formattati e passati al template per la visualizzazione.</li>
+                            <li>Se il prodotto ha un'immagine, il link viene costruito dinamicamente.</li>
+                            <li>La pagina <code>showProduct.html</code> viene mostrata all'utente con le informazioni del prodotto.</li>
+                        </ul>
+                        
+                        <h3>Codice</h3>
+                        <code>
+                            @app.get('/showProduct/&lt;int:id&gt;')<br>
+                            def showProduct(id):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;id_user = request.args.get('id_user')<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;conn = get_db_connection()<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;cursor = conn.execute('SELECT * FROM products WHERE id = ?', (id,))<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;product = cursor.fetchone()<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;conn.close()<br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;processed_data = {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;id&quot;: product[0],<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: product[1],<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;link&quot;: "img/"+ product[2] + '.webp' if product[2] else "img/default.jpg",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;description&quot;: product[3],<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;price&quot;: product[4],<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return render_template('showProduct.html', product=processed_data, id_user=id_user)
+                        </code>
+                        <h3>(/confirm-purchase)</h3>
+                        <p>
+                            La route <code>@app.get('/confirm-purchase')</code> è utilizzata per confermare l'acquisto di un prodotto da parte di un utente. Quando l'utente conferma l'acquisto, il saldo dell'utente viene aggiornato nel database sottraendo il prezzo del prodotto acquistato.
+                        </p>
+                        <p>Il flusso della route è il seguente:</p>
+                        <ul>
+                            <li>L'ID dell'utente e l'ID del prodotto sono ottenuti dalla query string dell'URL.</li>
+                            <li>Il prezzo del prodotto e il saldo dell'utente vengono recuperati dal database.</li>
+                            <li>Il saldo dell'utente viene aggiornato sottraendo il prezzo del prodotto acquistato.</li>
+                            <li>La pagina <code>confirm-purchase.html</code> viene mostrata per confermare l'acquisto.</li>
+                        </ul>
+                
+                        <h3>Codice:</h3>
+                        <code>
+                            @app.get('/confirm-purchase')<br>
+                            def confirm_purchase():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;id_user = request.args.get('id_user')<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;id_product = request.args.get('id_product')<br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;conn = get_db_connection()<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;cursor = conn.execute('SELECT price FROM products WHERE id = ?', (id_product,))<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;price = cursor.fetchone()<br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;cursor2 = conn.execute('SELECT money FROM users WHERE id = ?', (id_user,))<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;money = cursor2.fetchone()<br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;new_money = money[0] - price[0]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;conn.execute('UPDATE users SET money = ? WHERE id = ?', (new_money, id_user))<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;conn.commit()<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;conn.close()<br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return render_template('confirm-purchase.html', id_user=id_user)
+                        </code>
+                        
                     <h3>Connessione al database</h3>
                     <p>Una funzione di supporto <code>get_db_connection()</code> viene utilizzata per stabilire e restituire una connessione al database SQLite:</p>
                     <code>
@@ -231,61 +324,20 @@ def register_post():<br>
             
                     <p>Sentiti libero di esplorare e ampliare il sito con nuove funzionalità!</p>
                     <h2>Codice completo</h2>
+                    
+                    <p>puoi trovare tutto il codice qui <a href="https://github.com/DrMainIT/flask-vercel ">https://github.com/DrMainIT/flask-vercel </a> per scaricare tutto il contenuto nella tua area di lavoro digitare nel terminale</p>
                     <code>
-                        from flask import request, render_template, jsonify, redirect<br>
-                        import sqlite3<br>
-                        from flask import Flask<br>
-                        app = Flask(__name__)<br>
-                        
-                        @app.route('/')<br>
-                        def index():<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;return render_template('index.html')<br>
-                        
-                        @app.route('/register', methods=['GET', 'POST'])<br>
-                        def register():<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;if request.method == 'POST':<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = request.form<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = data['username']<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email = data['email']<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password = data['password']<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn = sqlite3.connect('mydatabase.db')<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn.execute('INSERT INTO users (name, email, password) VALUES (?,?,?)', (name, email, password))<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn.commit()<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn.close()<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return redirect('/login')<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;return render_template('register.html')<br>
-                        
-                        @app.route('/login', methods=['GET', 'POST'])<br>
-                        def login():<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;if request.method == 'POST':<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = request.form<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email = data['email']<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password = data['password']<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn = sqlite3.connect('mydatabase.db')<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cursor = conn.execute('SELECT * FROM users WHERE email = ? AND password = ?', (email, password))<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;users = cursor.fetchall()<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn.close()<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if len(users) > 0:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return redirect('/dashboard')<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return redirect('/login')<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;return render_template('login.html')<br>
-                        
-                        if __name__ == '__main__':<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;app.run(debug=True)<br>
+                        git clone https://github.com/DrMainIT/flask-vercel 
                     </code>
-                    <p>per eseguire il codice e sperimentare con esso digitare nel terminale</p>
-                    <code>
-                        python app.py
-                    </code>
+                    <p>se non hai installato git consulta la documentazione <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">https://git-scm.com/book/en/v2/Getting-Started-Installing-Git</a></p>
                     <h2>Ora tocca a te</h2>
                     <p>Ora che hai una comprensione di base di come funziona un sito web, prova a creare il tuo progetto! Puoi iniziare con un semplice sito di portfolio o un blog personale. Qui di seguito troverai alcune sfide che ti aiuteranno a prendere padronanza degli argomenti trattati fino ad adesso</p>
                     <ul>
                         <li>Creare una route /helloworld che ritorna la parola “Hello World” e accedere alla pagina dal web <br><strong>Difficulty: Easy</strong></li>
-                        <li>Creare una fetch request che richiama la route /helloworld <br><strong>Difficulty: Medium</strong></li>
                         <li>Creare una route che prende in ingresso due numeri e ritorna la somma<br><strong>Difficulty: Medium</strong></li>
-                        <li>Creare il frontend che utilizza la route precedente <br><strong>Difficulty: Medium-Hard</strong></li>
+                        <li>Creare una pagina html e passargli il valore della route somma</li>
                     </ul>
                 </div>
             </body>
-            </html>
+            </html> 
+     

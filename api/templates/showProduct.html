@@ -96,9 +96,10 @@
         <p>Price: €{{ product.price }}</p>
     </div>
     <form action="/confirm-purchase" method="get">
-        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="hidden" name="id_product" value="{{ product.id }}">
+        <input type="hidden" name="id_user" value="{{ id_user }}">
         <button type="submit">Confirm Purchase</button>
     </form>
-    <a href="{{ url_for('showProducts') }}">Back to Products</a>
+    <a href="/showProducts/{{id_user}}">Torna alla home</a>
 </body>
 </html>
