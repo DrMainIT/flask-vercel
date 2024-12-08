@@ -10,7 +10,7 @@ app = flask.Flask(__name__)
 
 # use a database in local 
 db_path = os.getenv('DB_PATH', 'mydatabase.db')
-
+print(db_path)
 def create_tables():
     conn = sqlite3.connect(db_path)
     conn.execute('''
