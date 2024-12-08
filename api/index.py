@@ -10,11 +10,10 @@ app = flask.Flask(__name__)
 
 # use a database in local 
 db_path = os.getenv('DB_PATH', 'mydatabase.db')
-print(db_path)
 def create_tables():
     conn = sqlite3.connect(db_path)
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL,
@@ -23,7 +22,7 @@ def create_tables():
         )
     ''')
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS products (
+        CREATE TABLE products (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             image TEXT,
