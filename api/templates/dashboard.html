@@ -143,7 +143,6 @@
                 <img class="example-image" src="{{ url_for('static', filename='img/meme.jpeg') }}" alt="">
             </li>
         </ul>
-
         <h2>Backend</h2>
         <p>Il backend gestisce la logica del sito. Elabora i dati dal frontend ed esegue azioni come:</p>
         <ul>
@@ -186,6 +185,32 @@
             def index():<br>
             &nbsp;&nbsp;&nbsp;&nbsp;return 'Hello, World!'
         </code>
+        <h1>Jinja</h1>
+        <p>Jinja è un motore di template scritto in Python. Viene utilizzato da framework per applicazioni web come Flask, è molto utile per passare dei dati al frontend. Ipotizziamo di avere una route che oltre a passare una pagine html all'utente con la funzione render_template passa anche un <strong> titolo</strong></p>
+        <code>
+            <pre>@app.route('/')
+def index():
+    return render_template('index.html', title='Home')
+</pre>
+        </code>
+        <p>per visualizzare il titolo bastera nella nostra pagina html usare questa semplice e minimale sintassi</p>
+        <code>
+            <pre>
+&lt;h1&gt;{{ '{{ title }}' }}&lt;/h1&gt;
+            </pre>
+        </code>
+        <h2>Cicli in jinja</h2>
+        <p>potrebbe essere utile a volte passare delle liste piuttosto che variabili come una lista di persone. In questo caso per scrivere un ciclo in jinja basterà digitare</p>
+        <code>
+            <pre>
+&lt;ul&gt;
+    {{'{% for person in people %}'}}
+        &lt;li&gt;{{ '{{ person }}' }}&lt;/li&gt;
+    {{'{% endfor %}'}}
+&lt;/ul&gt;
+            </pre>
+        </code>
+        <p>per ulteriori informazioni visitare la documentazione <a href="https://jinja.palletsprojects.com/en/stable/">https://jinja.palletsprojects.com/en/stable/</a></p>
                 </div>
             </body>
             </html>
